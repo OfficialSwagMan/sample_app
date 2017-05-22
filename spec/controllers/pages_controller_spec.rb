@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe PagesController, type: :controller do
 
+  @base_title = "Simple App du Tutoriel Ruby on Rails"
+
   describe "GET #home" do
     it "returns http success" do
       get :home
       expect(response).to have_http_status(:success)
     end
     it "doit avoir le bon titre" do
-      get 'home'
-      response.shoudl have_selector("title", :content => "Simple App du Tutoriel Ruby on Rails | Accueil")
+      get :home
+      expect(response.body).to have_selector('title', :text => 'Simple App du Tutoriel Ruby on Rails | Accueil')
     end
   end
 
@@ -19,19 +21,30 @@ RSpec.describe PagesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
     it "doit avoir le bon titre" do
-      get 'home'
-      response.should have_selector("title", :content => "Simple App du Tutoriel Ruby on Rails | Contact")
+      get :contact
+      expect(response.body).to have_selector('title', :text => 'Simple App du Tutoriel Ruby on Rails | Contact')
     end
   end
 
-  describe "GET 'about'" do
-    it "devrait réussir" do
-      get 'about'
-      response.should be_success
+  describe "GET #about" do
+    it "returns http success" do
+      get :about
+      expect(response).to have_http_status(:success)
     end
     it "doit avoir le bon titre" do
-      get 'home'
-      response.should have_selector("title", :content => "Simple App du Tutoriel Ruby on Rails | À propos")
+      get :about
+      expect(response.body).to have_selector('title', :text => 'Simple App du Tutoriel Ruby on Rails | À propos')
+    end
+  end
+
+  describe "GET #help" do
+    it "returns http success" do
+      get :help
+      expect(response).to have_http_status(:success)
+    end
+    it "doit avoir le bon titre" do
+      get :help
+      expect(response.body).to have_selector('title', :text => @base_title + " | Aide")
     end
   end
 
